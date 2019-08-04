@@ -1,0 +1,95 @@
+stages:
+  - test
+  - build
+  - release
+  - notify
+
+test:
+  stage: test
+  only:
+    refs:
+      - merge_requests
+    changes:
+      - lib/**/*
+      - test/**/*
+
+  image: node:10.16.0-stretch
+
+  before_script:
+    - npm install
+  script:
+    - npm test
+
+build:
+  stage: build
+  only:
+    refs:
+      - triggers
+    variables:
+      - $RELEASE
+
+  cache:
+    paths:
+      - node_modules
+
+  image: node:10.16.0-stretch
+
+  before_script:
+    - rm -rf node_modules
+    - npm install
+  script:
+    - npm test
+
+release:
+  stage: release
+  only:
+    refs:
+      - triggers
+    variables:
+      - $RELEASE
+
+  cache:
+    paths:
+      - node_modules
+    policy: pull
+
+  image: python:3.7.4
+
+  variables:
+    GIT_USER_NAME: getto
+    GIT_USER_EMAIL: admin@getto.systems
+
+  before_script:
+    - pip install awscli
+  script:
+    - curl https://raw.githubusercontent.com/getto-systems/version-dump/master/bin/version_dump.sh | bash
+    - ./bin/push_tags.sh
+    - ./bin/deploy.sh
+
+release_success:
+  stage: notify
+  only:
+    refs:
+      - triggers
+    variables:
+      - $RELEASE
+  when: on_success
+
+  image: buildpack-deps:disco-curl
+
+  script:
+    - ./bin/notify.sh success
+
+release_failure:
+  stage: notify
+  only:
+    refs:
+      - triggers
+    variables:
+      - $RELEASE
+  when: on_failure
+
+  image: buildpack-deps:disco-curl
+
+  script:
+    - ./bin/notify.sh failure
