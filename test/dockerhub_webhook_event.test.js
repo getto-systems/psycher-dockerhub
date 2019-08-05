@@ -3,7 +3,7 @@ const dockerhub_webhook_event = require("../lib/dockerhub_webhook_event");
 const slack_secret = require("../lib/secrets/slack");
 const gitlab_secret = require("../lib/secrets/gitlab");
 
-test("is_not_trusted", () => {
+test("is_trigger_required", () => {
   const raw_slack_secret = {
     bot_token: "SLACK_BOT_TOKEN",
     repository_channels: {
@@ -30,7 +30,7 @@ test("is_not_trusted", () => {
     secret,
   });
 
-  expect(webhook_event.is_not_trusted()).toBe(false);
+  expect(webhook_event.is_trigger_required()).toBe(false);
 });
 
 test("secrets", () => {
