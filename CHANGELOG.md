@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Version : 1.3.0
+
+fix: pass build tag to gitlab secret See merge request getto-psycher/dockerhub!8
+
+
 ## Version : 1.2.0
 
 fix: variable name See merge request getto-psycher/dockerhub!7
