@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Version : 1.2.0
+
+fix: variable name See merge request getto-psycher/dockerhub!7
+
+
 ## Version : 1.1.0
 
 add: tag to gitlab secret See merge request getto-psycher/dockerhub!6
