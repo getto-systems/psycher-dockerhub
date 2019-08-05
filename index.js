@@ -70,7 +70,7 @@ const init_event_info = (raw_event) => {
 const init_secret = (aws_secret) => {
   const slack = slack_secret.prepare({
     bot_token: aws_secret["slack-bot-token"],
-    repository_channels: aws_secret["dockerhub-repository-channels"],
+    repository_channels: parse_object(aws_secret["dockerhub-repository-channels"]),
   });
   const gitlab = gitlab_secret.prepare({
     trigger_tokens: parse_object(aws_secret["gitlab-trigger-tokens"]),
