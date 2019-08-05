@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version : 1.4.0
+
+fix: notify message See merge request getto-psycher/dockerhub!10
+fix: secret test See merge request getto-psycher/dockerhub!9
+
+
 ## Version : 1.3.0
 
 fix: pass build tag to gitlab secret See merge request getto-psycher/dockerhub!8
