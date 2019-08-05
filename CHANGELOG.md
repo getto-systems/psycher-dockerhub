@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Version : 1.6.0
+
+fix: trigger condition See merge request getto-psycher/dockerhub!12
+
+
 ## Version : 1.5.0
 
 fix: notify message See merge request getto-psycher/dockerhub!11
