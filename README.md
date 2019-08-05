@@ -2,6 +2,8 @@
 
 getto-psycher dockerhub endpoint
 
+status: production ready
+
 
 ###### Table of Contents
 
