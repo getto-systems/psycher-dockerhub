@@ -63,6 +63,20 @@ test("unknown push", async () => {
   expect(mock.gitlab.data.trigger.length).toBe(0);
 });
 
+test("unknown notify", async () => {
+  const mock = init_mock();
+
+  await init_handler(mock, {
+    repository: "repo/unknown",
+    tag: "latest",
+    is_trusted: false,
+  }).handle_event();
+
+  expect(mock.slack.data.reply.length).toBe(0);
+  expect(mock.slack.data.notify.length).toBe(0);
+  expect(mock.gitlab.data.trigger.length).toBe(0);
+});
+
 const init_handler = (mock, event_info) => {
   const raw_slack_secret = {
     bot_token: "SLACK_BOT_TOKEN",
