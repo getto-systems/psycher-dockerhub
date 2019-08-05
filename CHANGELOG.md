@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Version : 1.5.0
+
+fix: notify message See merge request getto-psycher/dockerhub!11
+
+
 ## Version : 1.4.0
 
 fix: notify message See merge request getto-psycher/dockerhub!10
