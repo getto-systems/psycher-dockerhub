@@ -8,8 +8,10 @@ test("find token", () => {
   };
   const secret = gitlab_secret.prepare(raw_secret).init({
     repository: "repo/name",
+    tag: "TAG",
   });
 
+  expect(secret.tag).toBe("TAG");
   expect(secret.project_id).toBe("PROJECT_ID");
   expect(secret.trigger_token).toBe("TOKEN");
 });
