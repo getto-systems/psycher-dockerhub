@@ -42,8 +42,8 @@ exports.handler = async (aws_lambda_event) => {
   };
 };
 
-const init_handler = (raw_event, aws_secret) => {
-  const event_info = init_event_info(raw_event);
+const init_handler = (body, aws_secret) => {
+  const event_info = init_event_info(body);
   const secret = init_secret(aws_secret);
 
   const webhook_event = dockerhub_webhook_event.init({
@@ -59,7 +59,7 @@ const init_handler = (raw_event, aws_secret) => {
   });
 };
 
-const init_event_info = (raw_event) => {
+const init_event_info = (body) => {
   return {
     repository: body.repository.repo_name,
     tag: body.push_data.tag,
