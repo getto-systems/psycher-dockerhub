@@ -15,6 +15,4 @@ test("unknown push", async () => {
 
   expect(slack_request_mock.data.reply.length).toBe(1);
   expect(slack_request_mock.data.reply[0]).toBe("unknown-push");
-
-  expect(slack_request_mock.data.notify.length).toBe(0);
 });

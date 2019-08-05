@@ -11,10 +11,11 @@ test("notify tag", async () => {
     bot_token: "SLACK_BOT_TOKEN",
   });
 
-  notify_tag.perform(slack);
+  notify_tag.perform(slack, {
+    image: "IMAGE",
+    is_trusted: true,
+  });
 
-  expect(slack_request_mock.data.reply.length).toBe(0);
-
-  expect(slack_request_mock.data.notify.length).toBe(1);
-  expect(slack_request_mock.data.notify[0]).toBe("tag");
+  expect(slack_request_mock.data.reply.length).toBe(1);
+  expect(slack_request_mock.data.reply[0]).toBe("tag");
 });

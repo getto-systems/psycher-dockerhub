@@ -19,10 +19,8 @@ test("push latest", async () => {
     is_trusted: false,
   }).handle_event();
 
-  expect(mock.slack.data.reply.length).toBe(0);
-
-  expect(mock.slack.data.notify.length).toBe(1);
-  expect(mock.slack.data.notify[0]).toBe("tag");
+  expect(mock.slack.data.reply.length).toBe(1);
+  expect(mock.slack.data.reply[0]).toBe("tag");
 
   expect(mock.gitlab.data.trigger.length).toBe(1);
   expect(mock.gitlab.data.trigger[0]).toBe("push-latest");
@@ -37,10 +35,8 @@ test("only notify tag", async () => {
     is_trusted: true,
   }).handle_event();
 
-  expect(mock.slack.data.reply.length).toBe(0);
-
-  expect(mock.slack.data.notify.length).toBe(1);
-  expect(mock.slack.data.notify[0]).toBe("tag");
+  expect(mock.slack.data.reply.length).toBe(1);
+  expect(mock.slack.data.reply[0]).toBe("tag");
 
   expect(mock.gitlab.data.trigger.length).toBe(0);
 });
@@ -54,11 +50,9 @@ test("unknown push", async () => {
     is_trusted: false,
   }).handle_event();
 
-  expect(mock.slack.data.reply.length).toBe(1);
-  expect(mock.slack.data.reply[0]).toBe("unknown-push");
-
-  expect(mock.slack.data.notify.length).toBe(1);
-  expect(mock.slack.data.notify[0]).toBe("tag");
+  expect(mock.slack.data.reply.length).toBe(2);
+  expect(mock.slack.data.reply[0]).toBe("tag");
+  expect(mock.slack.data.reply[1]).toBe("unknown-push");
 
   expect(mock.gitlab.data.trigger.length).toBe(0);
 });
@@ -73,7 +67,6 @@ test("unknown notify", async () => {
   }).handle_event();
 
   expect(mock.slack.data.reply.length).toBe(0);
-  expect(mock.slack.data.notify.length).toBe(0);
   expect(mock.gitlab.data.trigger.length).toBe(0);
 });
 
