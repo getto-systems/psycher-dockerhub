@@ -10,9 +10,7 @@ test("find destination channel", async () => {
   });
 
   const channel = await destination.channel({
-    job_signature: {
-      name: "repo/name",
-    },
+    name: "repo/name",
   });
 
   expect(channel).toBe("CHANNEL");

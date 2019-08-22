@@ -10,9 +10,7 @@ test("check target exists", async () => {
   });
 
   const result = await deployment.target_exists({
-    job_signature: {
-      name: "repo/name",
-    },
+    name: "repo/name",
   });
 
   expect(result).toBe(true);

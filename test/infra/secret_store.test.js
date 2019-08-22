@@ -7,10 +7,10 @@ test("job_target_exists", async () => {
     }),
   });
 
-  const result = await store.job_target_exists({job_signature: {name: "repo/name"}});
+  const result = await store.job_target_exists({name: "repo/name"});
   expect(result).toBe(true);
 
-  const unknown = await store.job_target_exists({job_signature: {name: "unknown/name"}});
+  const unknown = await store.job_target_exists({name: "unknown/name"});
   expect(unknown).toBe(false);
 });
 
@@ -23,16 +23,16 @@ test("job_token", async () => {
     }),
   });
 
-  const token = await store.job_token({job_signature: {name: "repo/name"}});
+  const token = await store.job_token({name: "repo/name"});
   expect(token).toEqual({project_id: "PROJECT-ID", token: "TOKEN"});
 
-  const no_project_id_token = await store.job_token({job_signature: {name: "repo/no_project_id"}});
+  const no_project_id_token = await store.job_token({name: "repo/no_project_id"});
   expect(no_project_id_token).toBe(null);
 
-  const no_token_token = await store.job_token({job_signature: {name: "repo/no_token"}});
+  const no_token_token = await store.job_token({name: "repo/no_token"});
   expect(no_token_token).toBe(null);
 
-  const unknown_target = await store.job_token({job_signature: {name: "repo/unknown"}});
+  const unknown_target = await store.job_token({name: "repo/unknown"});
   expect(unknown_target).toBe(null);
 });
 
@@ -43,10 +43,10 @@ test("destination_channel", async () => {
     }),
   });
 
-  const channel = await store.destination_channel({job_signature: {name: "repo/name"}});
+  const channel = await store.destination_channel({name: "repo/name"});
   expect(channel).toBe("CHANNEL");
 
-  const unknown = await store.destination_channel({job_signature: {name: "repo/unknown"}});
+  const unknown = await store.destination_channel({name: "repo/unknown"});
   expect(unknown).toBe(null);
 });
 
