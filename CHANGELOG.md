@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Version : 1.8.0
+
+- refactor: models : See merge request getto-psycher/dockerhub!14
+
+
 ## Version : 1.7.0
 
 fix: notify message See merge request getto-psycher/dockerhub!13
