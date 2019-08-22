@@ -27,7 +27,7 @@ exports.handler = async (aws_lambda_event) => {
   console.log(aws_lambda_event);
 
   const body = parse_json(aws_lambda_event.body);
-  const event_info = slack_bot_event.parse(body);
+  const event_info = dockerhub_webhook_event.parse(body);
   if (event_info) {
     await handle(event_info);
   }
