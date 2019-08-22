@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Version : 1.9.0
+
+- fix: variable name : See merge request getto-psycher/dockerhub!16
+
+
 ## Version : 1.8.1
 
 - fix: notify : See merge request getto-psycher/dockerhub!15
