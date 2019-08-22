@@ -1,38 +1,36 @@
+"use strict";
+
+const dockerhub_webhook_event = require("./lib/ui/dockerhub_webhook_event");
+const notification_factory = require("./lib/notification");
 const handler = require("./lib/handler");
-const dockerhub_webhook_event = require("./lib/dockerhub_webhook_event");
 
-const slack_secret = require("./lib/secrets/slack");
-const gitlab_secret = require("./lib/secrets/gitlab");
+const repository = {
+  destination: require("./lib/destination"),
+  deployment: require("./lib/deployment"),
+  pipeline: require("./lib/pipeline"),
+};
 
-const slack_messenger = require("./lib/outgoing_messengers/slack");
-const gitlab_messenger = require("./lib/outgoing_messengers/gitlab");
+const infra = {
+  secret_store: require("./lib/infra/secret_store"),
+  job_store: require("./lib/infra/job_store"),
+};
 
-const slack_request = require("./lib/outgoing_messengers/requests/slack");
-const gitlab_request = require("./lib/outgoing_messengers/requests/gitlab");
+const vendor = {
+  aws_secrets: require("getto-aws_secrets"),
+  gitlab_api: require("getto-gitlab_api"),
+};
 
-const aws_secret_provider = require("./lib/providers/aws_secret");
+const i18n_factory = require("./lib/i18n");
 
 exports.handler = async (aws_lambda_event) => {
   // logging event object for debug real-world event
   console.log(aws_lambda_event);
 
   const body = parse_json(aws_lambda_event.body);
-  if (!body) {
-    // bad request when request body parse failed
-    return {
-      statusCode: 400,
-      body: JSON.stringify({
-        message: "invalid_body",
-      }),
-    };
+  const event_info = slack_bot_event.parse(body);
+  if (event_info) {
+    await handle(event_info);
   }
-
-  // handle web hook event
-  const aws_secret = await aws_secret_provider.get({
-    region: process.env.REGION,
-    secret_id: process.env.SECRET_ID,
-  });
-  await init_handler(body, aws_secret).handle_event();
 
   return {
     statusCode: 200,
@@ -42,62 +40,50 @@ exports.handler = async (aws_lambda_event) => {
   };
 };
 
-const init_handler = (body, aws_secret) => {
-  const event_info = init_event_info(body);
-  const secret = init_secret(aws_secret);
-
-  const webhook_event = dockerhub_webhook_event.init({
+const handle = (event_info) => {
+  const repository = init_repository();
+  const notification = notification_factory.init({
     event_info,
-    secret,
+    repository,
+  });
+  const i18n = i18n_factory.init("ja");
+
+  const actions = handler.detect_actions({
+    type: event_info.type,
+    i18n,
+    notification,
   });
 
-  const messenger = init_messenger();
-
-  return handler.init({
-    webhook_event,
-    messenger,
-  });
+  return handler.perform(actions);
 };
 
-const init_event_info = (body) => {
-  return {
-    repository: body.repository.repo_name,
-    tag: body.push_data.tag,
-    is_trusted: body.repository.is_trusted,
-  };
-};
-
-const init_secret = (aws_secret) => {
-  const slack = slack_secret.prepare({
-    bot_token: aws_secret["slack-bot-token"],
-    repository_channels: parse_object(aws_secret["dockerhub-repository-channels"]),
+const init_repository = () => {
+  const secret_store = infra.secret_store.init({
+    aws_secrets: vendor.aws_secrets.init({
+      region: process.env.REGION,
+      secret_id: process.env.SECRET_ID,
+    }),
   });
-  const gitlab = gitlab_secret.prepare({
-    trigger_tokens: parse_object(aws_secret["gitlab-trigger-tokens"]),
+  const job_store = infra.job_store.init({
+    gitlab_api: vendor.gitlab_api.init(),
   });
 
-  return {
-    slack,
-    gitlab,
-  };
-};
-
-const init_messenger = () => {
-  const slack = slack_messenger.prepare(slack_request);
-  const gitlab = gitlab_messenger.prepare(gitlab_request);
+  const destination = repository.destination.init({
+    secret_store,
+  });
+  const deployment = repository.deployment.init({
+    secret_store,
+  });
+  const pipeline = repository.pipeline.init({
+    secret_store,
+    job_store,
+  });
 
   return {
-    slack,
-    gitlab,
+    destination,
+    deployment,
+    pipeline,
   };
-};
-
-const parse_object = (raw) => {
-  const value = parse_json(raw);
-  if (!value) {
-    return {};
-  }
-  return value;
 };
 
 const parse_json = (raw) => {
@@ -108,4 +94,5 @@ const parse_json = (raw) => {
       // ignore parse error
     }
   }
+  return null;
 };
