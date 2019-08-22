@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Version : 1.11.0
+
+- fix: job_signature : See merge request getto-psycher/dockerhub!18
+
+
 ## Version : 1.10.0
 
 - fix: job_signature : See merge request getto-psycher/dockerhub!17
