@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Version : 1.12.0
+
+- fix: channel storage : See merge request getto-psycher/dockerhub!19
+
+
 ## Version : 1.11.0
 
 - fix: job_signature : See merge request getto-psycher/dockerhub!18
