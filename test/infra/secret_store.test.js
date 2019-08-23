@@ -38,8 +38,8 @@ test("job_token", async () => {
 
 test("destination_channel", async () => {
   const {store, aws_secrets} = init_secret_store({
-    "dockerhub-repository-channels": JSON.stringify({
-      "repo/name": "CHANNEL",
+    "gitlab-trigger-tokens": JSON.stringify({
+      "repo/name": {channel: "CHANNEL"},
     }),
   });
 
