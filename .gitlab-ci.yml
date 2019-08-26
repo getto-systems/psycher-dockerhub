@@ -1,5 +1,11 @@
 image: getto/hangar:nULGpYUWsl9TlpXx
 
+stages:
+  - test
+  - build
+  - release
+  - notify
+
 test:
   stage: test
   only:
