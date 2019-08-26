@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "getto-aws_secrets": "^1.0.0",
-    "getto-gitlab_api": "^1.0.1",
+    "getto-gitlab_api": "^1.0.2",
     "getto-memoize": "^1.0.0",
     "getto-specification": "^1.0.0"
   }
