@@ -1,9 +1,11 @@
 {
+  "name": "getto-psycher-slack",
+  "description": "getto-psycher slack endpoint",
   "version": "1.12.0",
   "scripts": {
     "start": "npm run watch",
     "watch": "npm run watch:lib & npm run watch:test",
-    "watch:lib": "exec-on-changed -d ./lib -f ./bin/test_corresponding.sh",
+    "watch:lib": "exec-on-changed -d ./lib -f ./bin/test.sh",
     "watch:test": "exec-on-changed -d ./test -f ./bin/test.sh",
     "test": "jest --config jest.config.json"
   },

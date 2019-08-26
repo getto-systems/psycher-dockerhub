@@ -1,8 +1,4 @@
-stages:
-  - test
-  - build
-  - release
-  - notify
+image: getto/hangar:nULGpYUWsl9TlpXx
 
 test:
   stage: test
@@ -10,35 +6,93 @@ test:
     refs:
       - merge_requests
     changes:
+      - index.js
       - lib/**/*
       - test/**/*
 
-  image: node:10.16.0-stretch
-
   before_script:
-    - npm install
+    - ./bin/restore.sh
   script:
     - npm test
+
+check:
+  stage: build
+  only:
+    refs:
+      - schedules
+    variables:
+      - $CHECK
+
+  image: getto/hangar:latest
+
+  variables:
+    DOCKER_HOST: tcp://docker:2375/
+    DOCKER_DRIVER: overlay2
+    DOCKER_CONTENT_TRUST: 1
+  services:
+    - docker:dind
+
+  cache:
+    paths:
+      - .cache
+
+  script:
+    - getto-hangar-build.sh
 
 build:
   stage: build
   only:
     refs:
-      - triggers
-    variables:
-      - $RELEASE
+      - merge_requests
+    changes:
+      - package.json
+      - package-lock.json
+      - Dockerfile
+      - Dockerfile-test
+
+  image: getto/hangar:latest
+
+  variables:
+    DOCKER_HOST: tcp://docker:2375/
+    DOCKER_DRIVER: overlay2
+    DOCKER_CONTENT_TRUST: 1
+  services:
+    - docker:dind
 
   cache:
     paths:
-      - node_modules
+      - .cache
 
-  image: node:10.16.0-stretch
-
-  before_script:
-    - rm -rf node_modules
-    - npm install
   script:
-    - npm test
+    - getto-hangar-build.sh
+
+push_image:
+  stage: build
+  only:
+    refs:
+      - master@getto-psycher/dockerhub
+    changes:
+      - package-lock.json
+      - Dockerfile
+      - Dockerfile-test
+  except:
+    refs:
+      - schedules
+      - triggers
+
+  image: getto/hangar:latest
+
+  variables:
+    DOCKER_HOST: tcp://docker:2375/
+    DOCKER_DRIVER: overlay2
+    DOCKER_CONTENT_TRUST: 1
+    GIT_USER_NAME: getto
+    GIT_USER_EMAIL: admin@getto.systems
+  services:
+    - docker:dind
+
+  script:
+    - getto-hangar-push.sh
 
 release:
   stage: release
@@ -48,25 +102,17 @@ release:
     variables:
       - $RELEASE
 
-  cache:
-    paths:
-      - node_modules
-    policy: pull
-
-  image: python:3.7.4
-
   variables:
     GIT_USER_NAME: getto
     GIT_USER_EMAIL: admin@getto.systems
 
   before_script:
-    - pip install awscli
+    - ./bin/restore.sh
   script:
+    - npm test
     - curl https://raw.githubusercontent.com/getto-systems/version-dump/master/bin/version_dump.sh | bash
     - ./bin/push_tags.sh
     - ./bin/deploy.sh
-  after_script:
-    - rm -rf node_modules
 
 release_success:
   stage: notify
