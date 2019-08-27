@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Version : 2.0.0
+
+- model arranged! : See merge request getto-systems-base/psycher/dockerhub!24
+
+
 ## Version : 1.12.2
 
 - fix: push_tags : See merge request getto-systems-base/psycher/dockerhub!23
