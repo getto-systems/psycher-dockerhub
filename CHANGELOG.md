@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## Version : 1.12.1
+
+- fix: push_tags : See merge request getto-psycher/dockerhub!22
+- update: dependencies : See merge request getto-psycher/dockerhub!21
+- build(deps): bump getto-specification from 1.0.0 to 1.0.1
+- build(deps): bump getto-aws_secrets from 1.0.0 to 1.0.1
+- build(deps): bump getto-memoize from 1.0.0 to 1.0.1
+- build(deps): bump getto-gitlab_api from 1.0.1 to 1.0.2
+- add: Dockerfile : See merge request getto-psycher/dockerhub!20
+
+
 ## Version : 1.12.0
 
 - fix: channel storage : See merge request getto-psycher/dockerhub!19
