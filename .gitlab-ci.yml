@@ -76,7 +76,7 @@ push_image:
   stage: build
   only:
     refs:
-      - master@getto-psycher/dockerhub
+      - master@getto-systems-base/projects/psycher/dockerhub
     changes:
       - package-lock.json
       - Dockerfile
