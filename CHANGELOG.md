@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Version : 2.0.1
+
+- fix: gitlab-ci : See merge request getto-systems-base/projects/psycher/dockerhub!25
+
+
 ## Version : 2.0.0
 
 - model arranged! : See merge request getto-systems-base/psycher/dockerhub!24
