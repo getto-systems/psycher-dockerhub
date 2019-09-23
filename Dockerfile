@@ -24,6 +24,7 @@ RUN set -x && \
   curl -sL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash - && \
   apt-get install -y nodejs && \
   npm install -g npm && \
+  rm -rf /root/.npm && \
   : "cleanup apt caches" && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/* && \
