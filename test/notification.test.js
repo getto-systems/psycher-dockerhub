@@ -1,7 +1,7 @@
 const notification_factory = require("../lib/notification");
 
-const deployment_factory = require("../lib/deployment");
-const pipeline_factory = require("../lib/pipeline");
+const deployment_factory = require("../lib/notification/job/deployment");
+const pipeline_factory = require("../lib/notification/job/pipeline");
 
 const secret_store_factory = require("./infra/secret_store");
 const job_store_factory = require("./infra/job_store");

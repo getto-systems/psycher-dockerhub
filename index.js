@@ -5,8 +5,8 @@ const notification_factory = require("./lib/notification");
 const handler = require("./lib/handler");
 
 const repository = {
-  deployment: require("./lib/deployment"),
-  pipeline: require("./lib/pipeline"),
+  deployment: require("./lib/notification/job/deployment"),
+  pipeline: require("./lib/notification/job/pipeline"),
 };
 
 const infra = {
