@@ -5,7 +5,6 @@ const notification_factory = require("./lib/notification");
 const handler = require("./lib/handler");
 
 const repository = {
-  destination: require("./lib/destination"),
   deployment: require("./lib/deployment"),
   pipeline: require("./lib/pipeline"),
 };
@@ -68,9 +67,6 @@ const init_repository = () => {
     gitlab_api: vendor.gitlab_api.init(),
   });
 
-  const destination = repository.destination.init({
-    secret_store,
-  });
   const deployment = repository.deployment.init({
     secret_store,
   });
@@ -80,7 +76,6 @@ const init_repository = () => {
   });
 
   return {
-    destination,
     deployment,
     pipeline,
   };
