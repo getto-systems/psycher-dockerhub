@@ -2,7 +2,6 @@ const handler = require("../../lib/handler");
 
 const notification_factory = require("../../lib/notification");
 
-const destination_factory = require("../../lib/destination");
 const deployment_factory = require("../../lib/deployment");
 const pipeline_factory = require("../../lib/pipeline");
 
@@ -170,9 +169,6 @@ const init_repository = ({job_target_exists, job_token, destination_channel, pus
     push_latest_error,
   });
 
-  const destination = destination_factory.init({
-    secret_store,
-  });
   const deployment = deployment_factory.init({
     secret_store,
   });
@@ -182,7 +178,6 @@ const init_repository = ({job_target_exists, job_token, destination_channel, pus
   });
 
   const repository = {
-    destination,
     deployment,
     pipeline,
   };

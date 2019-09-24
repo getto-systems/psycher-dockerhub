@@ -15,3 +15,17 @@ test("check target exists", async () => {
 
   expect(result).toBe(true);
 });
+
+test("find channel", async () => {
+  const deployment = deployment_factory.init({
+    secret_store: secret_store_factory.init({
+      destination_channel: "CHANNEL",
+    }),
+  });
+
+  const channel = await deployment.channel({
+    name: "repo/name",
+  });
+
+  expect(channel).toBe("CHANNEL");
+});
