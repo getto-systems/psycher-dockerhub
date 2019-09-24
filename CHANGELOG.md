@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## Version : 2.1.0
+
+- fix: repository location : See merge request getto-systems-base/projects/psycher/dockerhub!32
+- merge: deployment <- destination : See merge request getto-systems-base/projects/psycher/dockerhub!31
+- fix: vulnerabilities : See merge request getto-systems-base/projects/psycher/dockerhub!30
+- fix: vulnerabilities : See merge request getto-systems-base/projects/psycher/dockerhub!29
+- fix: vulnerabilities : See merge request getto-systems-base/projects/psycher/dockerhub!28
+- fix: gitlab-ci : See merge request getto-systems-base/projects/psycher/dockerhub!27
+- fix: gitlab-ci : See merge request getto-systems-base/projects/psycher/dockerhub!26
+
+
 ## Version : 2.0.1
 
 - fix: gitlab-ci : See merge request getto-systems-base/projects/psycher/dockerhub!25
